@@ -32,11 +32,7 @@ class UserAuth extends Model
     public function getLastUserType(){
         return $this->thisUser->getAttr('type');
     }
-    public function setPassword($password, $userId){
-        $this->thisUser = self::find($userId);
-        $this->thisUser->set('password', password_hash($password, PASSWORD_BCRYPT));
-        $this->thisUser->save();
-    }
+
     public function findUser($userId){
         $this->thisUser = self::find($userId);
         return $this->thisUser;
