@@ -10,6 +10,7 @@ use think\Model;
  */
 class UserAuth extends Model
 {
+    protected $table = "t_user";
     protected $pk = 'id';
     protected $readonly = ['id','username'];
     private $thisUser;

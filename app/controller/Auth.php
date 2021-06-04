@@ -20,7 +20,7 @@ class Auth
                 //验证成功，生成Token
                 try {
                     $token = Token::creatToken($Auth->getLastUserId(),$Auth->getLastUsername(), $Auth->getLastUserType());
-                    Token::cacheToken($Auth->getLastUserId(), $token);
+                    Token::cacheToken($token);
                     return show(200, "Login success", ['token' => $token], 200);
                 }catch (\Exception $e){
                     //Token生成失败
@@ -29,6 +29,32 @@ class Auth
                 # code...
             }else{
                 return show(401, "Login Failed", null, 200);
+            }
+        }
+    }
+
+    public function TokenCheck(){
+        $param =  \think\facade\Request::post(['token']);
+        if(empty($param['token'])){
+            return show(400, "Invalid input", null, 200);
+        }else{
+            if (Token::checkToken($param['token'])) {
+                return show(200, "OK", null, 200);
+            }else{
+                return show(401, "Failed", null, 200);
+            }
+        }
+    }
+
+    public function Logout(){
+        $param =  \think\facade\Request::post(['token']);
+        if(empty($param['token'])){
+            return show(400, "Invalid input", null, 200);
+        }else{
+            if (Token::removeToken($param['token'])) {
+                return show(200, "OK", null, 200);
+            }else{
+                return show(401, "Failed", null, 200);
             }
         }
     }

@@ -10,5 +10,15 @@
 // +----------------------------------------------------------------------
 use think\facade\Route;
 
+Route::group('', function () {
+    Route::post('Auth/Login', 'Auth/Login');
+    Route::post('Auth/TokenCheck', 'Auth/TokenCheck');
+    Route::get('Order/TypeList', "Order/typeList");
+    Route::post('Order/MenuList', "Order/menuList");
+});
 
-Route::post('Auth/Login', 'Auth/Login');
+
+Route::group('',function (){
+
+})->middleware(\app\middleware\AuthCheck::class);
+

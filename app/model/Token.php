@@ -7,15 +7,12 @@ use Firebase\JWT\JWT;
 use think\facade\Cache;
 use think\Model;
 
-/**
- * @mixin \think\Model
- */
 class Token
 {
 
     static function creatToken($userId, $username, $userType){
         $time = time(); //签发时间
-        $expire = $time + 43200 ; //过期时间 12小时后
+        $expire = $time + 10800 ; //过期时间 3小时后
         $payload = array(
             "user_id" => $userId,
             "username" => $username,
@@ -26,18 +23,18 @@ class Token
             "nbf" => $time,
             "exp" => $expire
         );
-        $token = JWT::encode($payload, config('config.token_private_pem'),'RS512');
+        $token = JWT::encode($payload, config('token.token_private_pem'),'RS512');
         return $token;
     }
-    static function cacheToken($userId, $token){
-        return Cache::set($userId . '-Token', $token, 43200);
+    static function cacheToken($token){
+        return Cache::set(self::getUid($token) . '-Token', $token, 10800);
     }
-    static function checkToken($userId, $token){
-        return Cache::get($userId . '-Token') === $token;
+    static function checkToken($token){
+        return Cache::get(self::getUid($token) . '-Token') === $token;
     }
-    static function removeToken($userId, $token){
-        if(\app\model\Token::checkTokenVaild($token) === true && Token::checkToken($userId, $token) === true){
-            Cache::delete($userId . '-Token');
+    static function removeToken($token){
+        if(\app\model\Token::checkTokenVaild($token) === true && Token::checkToken($token) === true){
+            Cache::delete(self::getUid($token) . '-Token');
             return true;
         }else{
             return false;
@@ -45,7 +42,7 @@ class Token
     }
     static function getUid($token){
         if(self::checkTokenVaild($token)){
-            $jwtAuth = json_encode(JWT::decode($token,config('config.token_public_pem'), array('RS512')));
+            $jwtAuth = json_encode(JWT::decode($token,config('token.token_public_pem'), array('RS512')));
             $authInfo = json_decode($jwtAuth, true);
             return $authInfo['user_id'];
         }else{
@@ -54,7 +51,7 @@ class Token
     }
     static function getUserType($token){
         if(self::checkTokenVaild($token)){
-            $jwtAuth = json_encode(JWT::decode($token,config('config.token_public_pem'), array('RS512')));
+            $jwtAuth = json_encode(JWT::decode($token,config('token.token_public_pem'), array('RS512')));
             $authInfo = json_decode($jwtAuth, true);
             return $authInfo['user_type'];
         }else{
@@ -63,7 +60,7 @@ class Token
     }
     static function getUsername($token){
         if(self::checkTokenVaild($token)){
-            $jwtAuth = json_encode(JWT::decode($token,config('config.token_public_pem'), array('RS512')));
+            $jwtAuth = json_encode(JWT::decode($token,config('token.token_public_pem'), array('RS512')));
             $authInfo = json_decode($jwtAuth, true);
             return $authInfo['username'];
         }else{
@@ -72,7 +69,7 @@ class Token
     }
     static function checkTokenVaild($token){
         try {
-            $jwtAuth = json_encode(JWT::decode($token,config('config.token_public_pem'), array('RS512')));
+            $jwtAuth = json_encode(JWT::decode($token,config('token.token_public_pem'), array('RS512')));
             $authInfo = json_decode($jwtAuth, true);
             if (!empty($authInfo['user_id']) && !empty($authInfo['username'])) {
                 return true;

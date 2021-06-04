@@ -13,7 +13,7 @@ class AuthCheck
             return show(402, 'Token Needed', null, 200);
         }else{
             $thisToken = Request()->header("X-Token");
-            if(Token::checkTokenVaild($thisToken) && Token::checkToken(Token::getUid($thisToken),$thisToken)){
+            if(Token::checkTokenVaild($thisToken) && Token::checkToken($thisToken)){
                 $request->thisUserId = Token::getUid($thisToken);
                 $request->thisUsername = Token::getUsername($thisToken);
             }else{
