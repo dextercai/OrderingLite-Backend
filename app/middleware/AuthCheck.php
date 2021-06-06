@@ -16,6 +16,7 @@ class AuthCheck
             if(Token::checkTokenVaild($thisToken) && Token::checkToken($thisToken)){
                 $request->thisUserId = Token::getUid($thisToken);
                 $request->thisUsername = Token::getUsername($thisToken);
+                $request->thisUserType = Token::getUserType($thisToken);
             }else{
                 return show(401, 'Unauthorized', null, 200);
             }

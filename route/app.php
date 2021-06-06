@@ -15,10 +15,15 @@ Route::group('', function () {
     Route::post('Auth/TokenCheck', 'Auth/TokenCheck');
     Route::get('Order/TypeList', "Order/typeList");
     Route::post('Order/MenuList', "Order/menuList");
+    Route::post('Order/tableInfo', "Order/vaildTable");
+    Route::post('Order/commit', "Order/orderCommit");
+    Route::post('Order/orderList', "Order/orderList");
 });
 
 
 Route::group('',function (){
-
+    Route::get('User/list', "User/list");
+    Route::post('User/update', "User/update");
+    Route::post('User/delete', "User/delete");
 })->middleware(\app\middleware\AuthCheck::class);
 

@@ -74,7 +74,7 @@ class Token
             if (!empty($authInfo['user_id']) && !empty($authInfo['username'])) {
                 return true;
             } else {
-                return false;
+                return $jwtAuth;
             }
         } catch (\Firebase\JWT\ExpiredException $e) {
             return false;
