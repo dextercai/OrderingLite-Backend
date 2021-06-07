@@ -25,6 +25,10 @@ class Order
     public function vaildTable(){
         $parm = Request::post(['tableToken']);
         $Obj = new Table();
+        $parm['tableToken'] = trim($parm['tableToken']);
+        if($parm['tableToken'] == null || $parm['tableToken'] == ""){
+            return show(404, "NOT FOUNT", null, 200);
+        }
         $result = $Obj->where(['token'=>$parm['tableToken']])->find();
         if($result != null){
             return show(200, "OK", $result, 200);
@@ -37,6 +41,7 @@ class Order
     public function orderCommit(){
         $parm = Request::post(['list', 'tableToken']);
         $Obj = new Table();
+        $parm['tableToken'] = trim($parm['tableToken']);
         $result = $Obj->where(['token'=>$parm['tableToken']])->find();
         if($result != null){
             $Obj = new \app\model\Session();
@@ -71,4 +76,6 @@ class Order
             return show(404, "NOT FOUNT", null, 200);
         }
     }
+
+
 }

@@ -13,3 +13,5 @@ class Table extends Model
     protected $table = "t_table";
 
 }
+
+

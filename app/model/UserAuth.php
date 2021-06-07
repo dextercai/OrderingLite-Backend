@@ -28,7 +28,7 @@ class UserAuth extends Model
         return $this->thisUser->getAttr('username');
     }
     public function getLastUserId(){
-        return $this->thisUser->getAttr('uid');
+        return $this->thisUser->getAttr('id');
     }
     public function getLastUserType(){
         return $this->thisUser->getAttr('type');
