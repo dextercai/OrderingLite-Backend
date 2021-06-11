@@ -6,8 +6,8 @@ namespace app\model;
 
 use think\Model;
 
-class TSView extends Model
+class OSTU extends Model
 {
-    protected $table = "v_ts";
+    protected $table = "v_ostu";
 
 }

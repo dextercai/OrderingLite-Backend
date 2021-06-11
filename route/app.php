@@ -31,6 +31,9 @@ Route::group('',function (){
     Route::get('Session/list', "Session/list");
     Route::get('Session/ret', "Session/ret");
     Route::post('Session/start', "Session/start");
+    Route::get('Kitchen/alllist', "Kitchen/alllist");
+    Route::get('Kitchen/prelist', "Kitchen/prelist");
+    Route::get('Kitchen/donelist', "Kitchen/donelist");
 
 })->middleware(\app\middleware\AuthCheck::class);
 
