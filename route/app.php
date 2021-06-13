@@ -34,6 +34,12 @@ Route::group('',function (){
     Route::get('Kitchen/alllist', "Kitchen/alllist");
     Route::get('Kitchen/prelist', "Kitchen/prelist");
     Route::get('Kitchen/donelist', "Kitchen/donelist");
+    Route::post('Kitchen/toPre', "Kitchen/toPre");
+
+    Route::get('Dish/list', "Dish/list");
+    Route::post('Dish/update', "Dish/update");
+    Route::post('Dish/delete', "Dish/delete");
+
 
 })->middleware(\app\middleware\AuthCheck::class);
 
