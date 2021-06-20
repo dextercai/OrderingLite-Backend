@@ -58,7 +58,9 @@ class Session
         $result = $Obj->where(['id'=>$parm['sid']])->find();
         $result->isDone = 1;
         $result->endtime = time();
-        if($result->save()){
+        $table = (new \app\model\Table())->where(["id"=>$result->tid])->find();
+        $table->token = "";
+        if($result->save() && $table->save()){
             return show(200, "操作成功", null, 200);
         }else{
             return show(500, "操作失败", null, 200);

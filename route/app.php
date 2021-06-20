@@ -40,6 +40,8 @@ Route::group('',function (){
     Route::post('Dish/update', "Dish/update");
     Route::post('Dish/delete', "Dish/delete");
 
+    Route::get('Stat/now', "Stat/now");
+    Route::get('Stat/dish', "Stat/dish");
 
 })->middleware(\app\middleware\AuthCheck::class);
 

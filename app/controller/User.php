@@ -28,13 +28,11 @@ class User
                 $Obj = $Obj->where(['id'=>$parm['id']]);
 
             }
-
             if(empty($parm['password'])){
                 unset($parm['password']);
             }else{
                 $parm['password'] = password_hash($parm['password'], PASSWORD_BCRYPT);
             }
-
             return show(200, "操作完成", $Obj->data($parm)->save(), 200);
         }
 

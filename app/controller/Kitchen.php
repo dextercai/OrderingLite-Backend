@@ -8,7 +8,7 @@ class Kitchen
 {
     public function alllist(){
         $Obj = new \app\model\OSTU();
-        $Result = $Obj->whereRaw("isDone <> 1")->select();
+        $Result = $Obj->select();
         return show(200, "OK", $Result, 200);
     }
 

@@ -47,20 +47,20 @@ class Order
             $Obj = new \app\model\Session();
             $Session = $Obj->where(["tid"=>$result['id'], "isDone"=>"0"])->find();
             $Obj = new \app\model\Order();
+            $InsertArray = array();
             foreach ($parm['list'] as $item){
-                $Obj->save(
-                    [
-                        "tid"=>$result['id'],
-                        "did"=>$item['id'],
-                        "amount"=>$item['amount'],
-                        "sid"=>$Session['id'],
-                        "status"=>"已下单"
-                    ]
-                );
-            }
-        }
+                $InsertArray[] = [
+                    "tid"=>$result['id'],
+                    "did"=>$item['id'],
+                    "amount"=>$item['amount'],
+                    "sid"=>$Session['id'],
+                    "status"=>"已下单"
+                ];
 
-        return show(200, "OK", null, 200);
+            }
+            $Obj->saveAll($InsertArray);
+        }
+        return show(200, "OK", $parm['list'], 200);
     }
 
     public function orderList(){

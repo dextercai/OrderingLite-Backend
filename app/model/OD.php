@@ -6,10 +6,9 @@ namespace app\model;
 
 use think\Model;
 
-class OSTU extends Model
+
+class OD extends Model
 {
-    protected $table = "v_ostu";
+    protected $table = "v_od";
 
 }
-
-
